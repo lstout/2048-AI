@@ -1,6 +1,6 @@
 import math
 import random
-import config
+from config import Config
 
 try:
     import psyco; psyco.full()

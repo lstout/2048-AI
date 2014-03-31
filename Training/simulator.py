@@ -3,6 +3,7 @@ from neat import nn
 from math import log
 import copy
 import sys
+from multiprocessing.dummy import Pool
 
 MOVES = [1,2,3,4]
 
@@ -11,20 +12,22 @@ class Simulator(object):
 		self.population = population
 
 	def run(self):
-		for chromosome in self.population:
+		def eval_chromo(chromosome):
 			net = nn.create_phenotype(chromosome)
 			game = Game()
 			while True:
 				if game.board.won() or not game.board.canMove():
 					break
 				state = [log_2(item) for l in game.board.cells for item in l]
-				print dir(net)
-				sys.exit(1)
 				action = [v if valid(game.board,i+1) else -1 for i,v in enumerate(net.pactivate(state))]
 				move = action.index(max(action)) + 1
 				game.incScore(game.board.move(move))
 			score = game.score
 			chromosome.fitness = score
+
+		pool = Pool(4)
+		pool.map(eval_chromo, self.population)
+			
 
 def log_2(n):
 	try:
