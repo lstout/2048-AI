@@ -8,49 +8,47 @@ def load(file):
         print 'Error: file %s not found!' %file
         raise
     else:
-        parameters = ConfigParser()#{'phenotype':{'fully_connected': True}})
-        parameters.readfp(config_file)
 
         # set class attributes
         # phenotype
-        Config.input_nodes          =       int(parameters.get('phenotype','input_nodes'))
-        Config.output_nodes         =       int(parameters.get('phenotype','output_nodes'))
-        Config.hidden_nodes         =       int(parameters.get('phenotype','hidden_nodes'))
+        Config.input_nodes          =       16
+        Config.output_nodes         =       4
+        Config.hidden_nodes         =       100
         #print 'fully_connected:',parameters.get('phenotype', 'fully_connected')
-        Config.fully_connected      =  bool(int(parameters.get('phenotype','fully_connected')))
-        Config.max_weight           =     float(parameters.get('phenotype','max_weight'))
-        Config.min_weight           =     float(parameters.get('phenotype','min_weight'))
-        Config.feedforward          =  bool(int(parameters.get('phenotype','feedforward')))
-        Config.nn_activation        =           parameters.get('phenotype','nn_activation')  # exp or tanh
-        Config.weight_stdev         =     float(parameters.get('phenotype','weight_stdev'))
+        Config.fully_connected      =       1
+        Config.max_weight           =       10
+        Config.min_weight           =       -10
+        Config.feedforward          =       0
+        Config.nn_activation        =       'exp'
+        Config.weight_stdev         =       0.9
 
         # GA
-        Config.pop_size                 =   int(parameters.get('genetic','pop_size'))
-        Config.max_fitness_threshold    = float(parameters.get('genetic','max_fitness_threshold'))
-        Config.prob_addconn             = float(parameters.get('genetic','prob_addconn'))
-        Config.prob_addnode             = float(parameters.get('genetic','prob_addnode'))
-        Config.prob_mutatebias          = float(parameters.get('genetic','prob_mutatebias'))
-        Config.bias_mutation_power      = float(parameters.get('genetic','bias_mutation_power'))
-        Config.prob_mutate_weight       = float(parameters.get('genetic','prob_mutate_weight'))
-        Config.weight_mutation_power    = float(parameters.get('genetic','weight_mutation_power'))
-        Config.prob_togglelink          = float(parameters.get('genetic','prob_togglelink'))
-        Config.elitism                  = float(parameters.get('genetic','elitism'))
+        Config.pop_size                 =   100
+        Config.max_fitness_threshold    =   float('inf')
+        Config.prob_addconn             =   0.05
+        Config.prob_addnode             =   0.03
+        Config.prob_mutatebias          =   0.20
+        Config.bias_mutation_power      =   0.5
+        Config.prob_mutate_weight       =   0.9
+        Config.weight_mutation_power    =   1.5
+        Config.prob_togglelink          =   0.01
+        Config.elitism                  =   1
 
         # genotype compatibility
-        Config.compatibility_threshold  = float(parameters.get('genotype compatibility','compatibility_threshold'))
-        Config.compatibility_change     = float(parameters.get('genotype compatibility','compatibility_change'))
-        Config.excess_coeficient        = float(parameters.get('genotype compatibility','excess_coeficient'))
-        Config.disjoint_coeficient      = float(parameters.get('genotype compatibility','disjoint_coeficient'))
-        Config.weight_coeficient        = float(parameters.get('genotype compatibility','weight_coeficient'))
+        Config.compatibility_threshold  =   3.0
+        Config.compatibility_change     =   0.0
+        Config.excess_coeficient        =   1.0
+        Config.disjoint_coeficient      =   1.0
+        Config.weight_coeficient        =   0.4
 
         # species
-        Config.species_size         =   int(parameters.get('species','species_size'))
-        Config.survival_threshold   = float(parameters.get('species','survival_threshold'))
-        Config.old_threshold        =   int(parameters.get('species','old_threshold'))
-        Config.youth_threshold      =   int(parameters.get('species','youth_threshold'))
-        Config.old_penalty          = float(parameters.get('species','old_penalty'))    # always in (0,1)
-        Config.youth_boost          = float(parameters.get('species','youth_boost'))   # always in (1,2)
-        Config.max_stagnation       =   int(parameters.get('species','max_stagnation'))
+        Config.species_size         =   10
+        Config.survival_threshold   =   0.2
+        Config.old_threshold        =   30
+        Config.youth_threshold      =   10
+        Config.old_penalty          =   0.2 # always in (0,1)
+        Config.youth_boost          =   1.2   # always in (1,2)
+        Config.max_stagnation       =   15
 
 class Config:
 
@@ -89,13 +87,9 @@ class Config:
 
     # species
     species_size        = None
-    survival_threshold  = None # only the best 20% for each species is allowed to mate
+    survival_threshold  = None    # only the best 20% for each species is allowed to mate
     old_threshold       = None
     youth_threshold     = None
     old_penalty         = None    # always in (0,1)
     youth_boost         = None    # always in (1,2)
     max_stagnation      = None
-
-    # for a future release
-    #ele_event_time = 1000
-    #ele_events = False

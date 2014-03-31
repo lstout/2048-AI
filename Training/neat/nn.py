@@ -1,5 +1,6 @@
 import math
 import random
+import config
 
 try:
     import psyco; psyco.full()
@@ -11,12 +12,12 @@ def sigmoid(x, response, activation_type):
     output = 0
     try:
         if activation_type == 'exp':
-            if x < - 30: output = 0.0
-            elif x > 30: output = 1.0
+            if x < Config.min_weight: output = 0.0
+            elif x > Config.max_weight: output = 1.0
             else: output = 1.0/(1.0 + math.exp(-x*response))
         elif activation_type == 'tanh':
-            if x < - 20: output = -1.0
-            elif x > 20: output = +1.0
+            if x < - Config.min_weight: output = -1.0
+            elif x > max_weight: output = +1.0
             else: output = math.tanh(x*response)
         else:
             # raise exception

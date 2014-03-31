@@ -254,6 +254,7 @@ class Population(object):
 
             # Evaluate individuals
             self.evaluate()
+            
             # Speciates the population
             self.__speciate(report)
 
@@ -402,19 +403,4 @@ class Population(object):
                 self.__create_checkpoint(report)
                 t0 = time.time() # updates the counter
             elif checkpoint_generation is not None and self.__generation % checkpoint_generation == 0:
-                self.__create_checkpoint(report)
-
-if __name__ ==  '__main__' :
-    
-    # sample fitness function
-    def eval_fitness(population):
-        for individual in population:
-            individual.fitness = 1.0
-            
-    # set fitness function 
-    Population.evaluate = eval_fitness
-    
-    # creates the population
-    pop = Population()
-    # runs the simulation for 250 epochs
-    pop.epoch(250)       
+                self.__create_checkpoint(report)   
