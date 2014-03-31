@@ -1,11 +1,11 @@
 function AI(grid) {
   this.grid = grid;
-  #Read NN from '../Training/?'
+  //Read NN from '../Training/?'
 }
 
 // performs a search and returns the best move
 AI.prototype.getBest = function() {
-  state = #getState
+  state = //getState from grid
   output = NN.activate(state)
   move = output.IndexOf(Math.max(output));
   return this.translate(move)
